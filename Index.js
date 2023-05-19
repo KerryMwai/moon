@@ -37,6 +37,8 @@ let timer;
 
 // Initialize the game
 function init() {
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
   board = [];
   for (let row = 0; row < ROWS; row++) {
     board[row] = [];
@@ -47,9 +49,22 @@ function init() {
   currentShape = getRandomShape();
   currentRow = 0;
   currentCol = Math.floor(COLS / 2) - Math.floor(currentShape[0].length / 2);
-  drawBoard();
-  drawShape();
+  drawBoard(ctx);
+  drawShape(ctx);
   timer = setInterval(moveDown, 1000);
+
+  // Keyboard events
+  document.addEventListener("keydown", function (event) {
+    if (event.code === "ArrowLeft") {
+      moveLeft();
+    } else if (event.code === "ArrowRight") {
+      moveRight();
+    } else if (event.code === "ArrowDown") {
+      moveDown();
+    } else if (event.code === "ArrowUp") {
+      rotateShape();
+    }
+  });
 }
 
 // Generate a random tetromino shape
@@ -59,10 +74,8 @@ function getRandomShape() {
 }
 
 // Draw the game board
-function drawBoard() {
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function drawBoard(ctx) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
       drawSquare(ctx, col, row, board[row][col]);
@@ -80,9 +93,7 @@ function drawSquare(ctx, x, y, colorIndex) {
 }
 
 // Draw the current shape on the game board
-function drawShape() {
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
+function drawShape(ctx) {
   for (let row = 0; row < currentShape.length; row++) {
     for (let col = 0; col < currentShape[row].length; col++) {
       if (currentShape[row][col]) {
@@ -93,3 +104,26 @@ function drawShape() {
 }
 
 // Move the current shape down by one
+function moveDown() {
+  // ...
+}
+
+// Move the current shape to the left
+function moveLeft() {
+  // ...
+}
+
+// Move the current shape to the right
+function moveRight() {
+  // ...
+}
+
+// Rotate the current shape
+function rotateShape() {
+  // ...
+}
+
+// Add event listener for the page load
+window.addEventListener("DOMContentLoaded", function () {
+  init();
+});
